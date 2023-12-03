@@ -1,24 +1,15 @@
-from flask import Flask , render_template, request
-import requests 
-
+from flask import Flask,render_template
 app = Flask(__name__)
-
 @app.route('/')
-def homepage():
-    return render_template("index.html")
-
-@app.route("/weatherapp",methods = ['POST' , "GET"])
-def get_weatherdata():
-    url = "https://api.openweathermap.org/data/2.5/weather"
-
-    param = {
-        'q':request.form.get("city"),
-        'appid':request.form.get('appid'),
-        'units':request.form.get('units')
-        }
-    response = requests.get(url,params=param)
-    data = response.json()
-    return f"data : {data}"
-
+def home():
+    return "You are in Home Page"
+# Use of <converter: variable name> in the 
+# route() decorator.
+@app.route('/allow/<int:Number>')
+def allow(Number):
+    if Number < 25:
+        return f'Hi! You Are Allowed with {Number}'
+    else:
+       return f'Hello! You are not allowed with {Number}'
 if __name__ == '__main__':
-    app.run(host= "0.0.0.0")
+    app.run()
